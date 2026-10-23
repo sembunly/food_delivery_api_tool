@@ -118,7 +118,7 @@ function jsonText(value) {
 }
 
 function requestUrl(path) {
-  return `${API_BASE_URL.replace(/\/$/, '')}${path}`;
+  return `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}${path}`;
 }
 
 function renderSidebar() {
@@ -357,7 +357,7 @@ function copyText(elementId, button) {
 }
 
 renderSidebar();
-byId('api-origin').textContent = API_BASE_URL;
+byId('api-origin').textContent = String(API_BASE_URL);
 controllerList.addEventListener('click', (event) => {
   const button = event.target.closest('[data-endpoint]');
   if (!button) return;

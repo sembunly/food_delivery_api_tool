@@ -40,7 +40,9 @@ async function readResponse(response) {
 async function send(method, path, options = {}) {
   const requestUrl = /^https?:\/\//i.test(String(path))
     ? String(path)
-    : `${API_BASE_URL.replace(/\/$/, '')}/${String(path).replace(/^\//, '')}`;
+    : API_BASE_URL
+      ? `${API_BASE_URL.replace(/\/$/, '')}/${String(path).replace(/^\//, '')}`
+      : String(path);
   const headers = new Headers(options.headers || {});
   const fetchOptions = {
     ...options,
