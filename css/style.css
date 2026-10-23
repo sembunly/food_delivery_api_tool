@@ -68,7 +68,8 @@ h1 { margin-bottom: 7px; color: #1f2938; font-size: clamp(24px, 3vw, 31px); lett
 .page-description { margin-bottom: 0; color: var(--muted); font-size: 11px; }
 .api-origin { display: grid; gap: 6px; justify-items: end; padding-bottom: 3px; }
 .origin-label { color: #98a1af; font-size: 8px; font-weight: 800; letter-spacing: 1px; }
-.api-origin code { padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px; background: white; color: #526075; font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.api-origin input { width: min(390px, 70vw); padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px; background: white; color: #526075; font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.api-origin input::placeholder { color: #9aa4b3; }
 .endpoint-empty { flex: 1; display: grid; min-height: 310px; align-content: center; justify-items: center; padding: 30px; border: 1px dashed #dce1e8; border-radius: 11px; background: rgba(255,255,255,.45); text-align: center; }
 .empty-symbol { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 14px; border-radius: 13px; background: #ebeffb; color: #526fd0; font-size: 23px; }
 .endpoint-empty h2 { margin: 0 0 8px; font-size: 15px; }

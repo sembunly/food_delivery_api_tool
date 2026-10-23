@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './config.js';
+import { getApiBaseUrl } from './config.js';
 
 export class ApiError extends Error {
   constructor(message, { status, statusText, data, headers, url }) {
@@ -38,10 +38,11 @@ async function readResponse(response) {
 }
 
 async function send(method, path, options = {}) {
+  const apiBaseUrl = getApiBaseUrl();
   const requestUrl = /^https?:\/\//i.test(String(path))
     ? String(path)
-    : API_BASE_URL
-      ? `${API_BASE_URL.replace(/\/$/, '')}/${String(path).replace(/^\//, '')}`
+    : apiBaseUrl
+      ? `${apiBaseUrl.replace(/\/$/, '')}/${String(path).replace(/^\//, '')}`
       : String(path);
   const headers = new Headers(options.headers || {});
   const fetchOptions = {

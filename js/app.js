@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './config.js';
+import { getApiBaseUrl } from './config.js';
 import { api, NetworkError } from './api.js';
 
 const JSON_HEADERS = { Accept: 'application/json', 'Content-Type': 'application/json' };
@@ -118,7 +118,8 @@ function jsonText(value) {
 }
 
 function requestUrl(path) {
-  return `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}${path}`;
+  const apiBaseUrl = getApiBaseUrl();
+  return `${apiBaseUrl ? apiBaseUrl.replace(/\/$/, '') : ''}${path}`;
 }
 
 function renderSidebar() {
@@ -357,7 +358,15 @@ function copyText(elementId, button) {
 }
 
 renderSidebar();
-byId('api-origin').textContent = String(API_BASE_URL);
+const apiOriginInput = byId('api-origin');
+apiOriginInput.value = getApiBaseUrl() || '';
+apiOriginInput.addEventListener('change', () => {
+  const value = apiOriginInput.value.trim().replace(/\/$/, '');
+  globalThis.APP_CONFIG.API_BASE_URL = value || null;
+  apiOriginInput.value = value;
+  if (selectedEndpoint) updatePathUrl();
+  checkConnection();
+});
 controllerList.addEventListener('click', (event) => {
   const button = event.target.closest('[data-endpoint]');
   if (!button) return;
