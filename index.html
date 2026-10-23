@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f9">
+  <title>API Console — Food Delivery</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="product-brand" href="#top"><span class="brand-mark">FD</span><span>Food Delivery<small>API CONSOLE</small></span></a>
+      <div class="sidebar-caption">API WORKSPACE</div>
+      <div class="controller-list" id="controller-list" aria-label="API controllers"></div>
+      <div class="sidebar-footer"><span class="sidebar-dot"></span><span>Development workspace</span></div>
+    </aside>
+
+    <main class="main-area" id="top">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Toggle controller navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>API testing</strong></div>
+        <div class="connection-state" id="connection-state"><span class="state-dot"></span><span>Checking API…</span></div>
+      </header>
+
+      <section class="workspace-content">
+        <div class="page-heading">
+          <div><p class="eyebrow">Spring Boot · V1</p><h1>API testing dashboard</h1><p class="page-description">Explore controller routes and send requests to your local Food Delivery API.</p></div>
+          <div class="api-origin"><span class="origin-label">API BASE URL</span><code id="api-origin"></code></div>
+        </div>
+
+        <div class="endpoint-empty" id="endpoint-empty">
+          <div class="empty-symbol">⌘</div><h2>Select an endpoint</h2><p>Choose a controller and route from the sidebar to configure a request.</p>
+        </div>
+
+        <section class="endpoint-workspace" id="endpoint-workspace" hidden>
+          <div class="endpoint-heading">
+            <div><div class="endpoint-kicker" id="endpoint-controller"></div><h2 id="endpoint-title"></h2><p id="endpoint-description"></p></div>
+            <span class="mapping-tag">Spring mapping</span>
+          </div>
+
+          <div class="request-response-grid">
+            <section class="panel request-panel" aria-labelledby="request-title">
+              <div class="panel-heading"><div><span class="panel-index">01</span><h3 id="request-title">Request</h3></div><span class="panel-caption">Configure and send</span></div>
+              <div class="request-controls">
+                <label class="control-label" for="request-method">METHOD</label>
+                <div class="url-row">
+                  <select id="request-method" aria-label="HTTP method">
+                    <option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option>
+                  </select>
+                  <input id="request-url" type="url" spellcheck="false" aria-label="Request URL">
+                  <button class="send-button" id="send-request" type="button"><span>Send</span><span aria-hidden="true">↗</span></button>
+                </div>
+                <div class="path-params" id="path-params"></div>
+                <div class="request-editors">
+                  <section class="editor-block">
+                    <div class="editor-heading"><label for="query-editor">Query parameters</label><span>JSON object</span></div>
+                    <textarea id="query-editor" rows="3" spellcheck="false" aria-label="Query parameters as JSON">{}</textarea>
+                  </section>
+                  <section class="editor-block">
+                    <div class="editor-heading"><label for="headers-editor">Headers</label><span>JSON object</span></div>
+                    <textarea id="headers-editor" rows="4" spellcheck="false" aria-label="Request headers as JSON"></textarea>
+                  </section>
+                  <section class="editor-block body-editor-block" id="body-editor-block">
+                    <div class="editor-heading"><label for="body-editor">Request body</label><span id="body-content-type">application/json</span></div>
+                    <textarea id="body-editor" rows="11" spellcheck="false" aria-label="Request body JSON"></textarea>
+                    <p class="editor-hint" id="body-hint"></p>
+                  </section>
+                  <section class="editor-block upload-block" id="upload-block" hidden>
+                    <div class="editor-heading"><label for="upload-files">Files</label><span>multipart/form-data · files</span></div>
+                    <input id="upload-files" type="file" name="files" multiple>
+                    <p class="editor-hint">The controller binds uploaded files from the <code>files</code> field. Supply other request fields with query parameters above.</p>
+                  </section>
+                </div>
+                <div class="request-footer"><span class="request-tip">Requests are sent directly to your configured API origin.</span><button class="clear-button" id="reset-request" type="button">Reset request</button></div>
+              </div>
+            </section>
+
+            <section class="panel response-panel" aria-labelledby="response-title">
+              <div class="panel-heading"><div><span class="panel-index">02</span><h3 id="response-title">Response</h3></div><span class="panel-caption" id="response-caption">Waiting for request</span></div>
+              <div class="response-summary" id="response-summary" hidden>
+                <span class="status-badge" id="response-status"></span>
+                <span class="response-metric"><strong id="response-time">—</strong><small>TIME</small></span>
+                <span class="response-metric"><strong id="response-size">—</strong><small>SIZE</small></span>
+              </div>
+              <div class="response-waiting" id="response-waiting"><span class="response-icon">↙</span><p>Send a request to inspect its response.</p></div>
+              <div class="response-result" id="response-result" hidden>
+                <section class="response-headers-block"><div class="response-section-title"><h4>Response headers</h4><button class="copy-button" id="copy-headers" type="button">Copy</button></div><pre id="response-headers"></pre></section>
+                <section class="response-body-block"><div class="response-section-title"><h4>Response body</h4><button class="copy-button" id="copy-response" type="button">Copy</button></div><pre id="response-body"></pre></section>
+              </div>
+            </section>
+          </div>
+          <div class="request-error" id="request-error" role="alert" hidden></div>
+        </section>
+        <footer class="workspace-footer"><span>Food Delivery API</span><span>Local development · No authentication configured</span></footer>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="connection-dialog" id="connection-dialog" aria-labelledby="connection-title" aria-describedby="connection-message" aria-busy="true">
+    <div class="connection-content"><span class="connection-icon" aria-hidden="true">↗</span><p class="eyebrow">API connection</p><h2 id="connection-title">Connecting to server</h2><p id="connection-message" role="status" aria-live="polite">Checking the Food Delivery API…</p><span class="loader" id="connection-loader" aria-hidden="true"></span><button class="retry-button" id="connection-retry" type="button" disabled>Checking…</button></div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
